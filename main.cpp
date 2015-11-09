@@ -12,21 +12,28 @@ int main(void) {
 	
 
   // object with explicit constructor from long
-  BigInt num1(40);
+  BigInt num1(-4);
   BigInt num2(60);
-  num1 += num2;
+//  cout<<(num2<num1)<<"DDDDDDDDDD"<<endl;
+  num1 = num1-num2;
+  cout<<(num1);
+  
+  
+  
   
   //cout<<"hello"<<num1<<endl;
   num1 = -num1;
   //cout<<"hello"<<num1<<"negative"<<endl;
   //cout<<(num1)<<endl;//<<(-4%10)<<endl<<"MAIN"<<endl;
    num1 = 1+num1+2;
+  //cout<<"hello"<<num1<<"negative"<<endl;
+   //cout<<num1<<"ssssssssssssssssssssssssssssss"<<endl;
    
-   cout<<num1<<"ssssssssssssssssssssssssssssss"<<endl;
-   
-   num1 = num1 -4;
-   
-    cout<<num1<<"ssssssssssssssssssssssssssssss"<<endl;
+   num1 = num1 + (-4);
+  // cout<<"hello"<<num1<<"negative"<<endl;
+   num1 = num1 - (-2);
+   //cout<<"hello"<<num1<<"negative"<<endl;
+    //cout<<num1<<"ssssssssssssssssssssssssssssss"<<endl;
 	
 	num1 = num1 *4;
    
@@ -113,8 +120,12 @@ int main(void) {
     cout << bigVal << endl;
   }
   
-  bigVal2 = bigVal2 *bigVal2 *bigVal2* bigVal2*bigVal2*bigVal2*bigVal2;
-
+  bigVal = 1234;
+  BigInt bigVal3 = bigVal2*bigVal;
+  
+cout<<bigVal<<" "<<bigVal2<<" "<<bigVal3;
+  
+  
   cout<<bigVal2<<"bigVal2"<<endl;
   return EXIT_SUCCESS;
 }

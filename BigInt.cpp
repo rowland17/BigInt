@@ -86,6 +86,29 @@ BigInt::~BigInt() {
 
 
 BigInt BigInt::operator-(BigInt const& other) const {
+	BigInt test = other;
+	cout<<this->size<<" "<<other.size;
+	BigInt test2 = *this;
+	cout<<test<<"rhs"<<"______________SUBTRACT"<<test2<<"lhs";
+	cout<<(test2<test)<<endl;
+	if(*this < other)
+	{
+		cout<<"lessthan"<<endl;
+		BigInt retVal = other - *this;
+		retVal.sign = false;
+		return retVal;
+	}
+	
+	if(this->sign && other.sign==false)
+	{
+		return (*this+ (-other));
+	}
+	if(this->sign == false && other.sign==false)
+	{
+		return (*this + -other);
+	}
+	
+	
 	BigInt result;
 	
 	if(this->size > other.size)
@@ -160,7 +183,7 @@ BigInt BigInt::operator-(BigInt const& other) const {
 	
 	while(result.data[i] == 0)
 	{
-		cout<<result.data[i]<<"----------------------------------------------------"<<endl;
+		//cout<<result.data[i]<<"----------------------------------------------------"<<endl;
 		c++;
 		i++;
 	}
@@ -190,6 +213,21 @@ return result;
 // binary addition
 BigInt BigInt::operator+(BigInt const& other) const {
 //cout<<this->data[0]<<"lhs"<<other.data[0]<<"rhs"<<endl;
+if(this->sign && (other.sign == false) )
+{
+	return *this - (-other);
+}
+if( (this->sign ==false)&& other.sign)
+{
+	return other - (-*this);
+}
+if((other.sign==false) &&(this->sign ==false))
+{
+	BigInt retVal = -other + -(*this);
+	retVal.sign = false;
+	return retVal;
+}
+
 
  short *lhs,*rhs;
   lhs = this->data;
@@ -299,7 +337,7 @@ int BigInt::setLength(long num)
 // compound addition-assignment operator
 BigInt BigInt::operator+=(BigInt const& other) {
 	//cout<<*this<<"plusequals"<<endl;
-	*this = *this +other;
+	*this = (*this +other);
 	//cout<<*this<<"plusequals"<<endl;
 	return *this;
 }
@@ -351,6 +389,7 @@ BigInt BigInt::operator-() const{
 }
 // equality operator
 bool BigInt::operator==(BigInt const& other) const {
+	if(this->sign != other.sign)return false;
 	if( this->size != other.size) return false;
 	int i = 0;
 	
@@ -369,19 +408,50 @@ bool BigInt::operator!=(BigInt const& other) const {
 	return !(*this==other);
 }
 //greater than
-bool BigInt::operator>(BigInt const& other) const {
-	if(this->size > other.size) return true;
-	else if (this->size <other.size)return false;
+bool BigInt::operator>(BigInt const& rhs) const {
+	if(this->sign && rhs.sign)
+	{
+		if(this->size > rhs.size){return true;}//
+		else if(this->size<rhs.size){return false;}//
+		else{
+			int i = 0;
+			for( i = 0; i<rhs.size; i++)
+			{
+				if(this->data[i] < rhs.data[i])
+				{
+						return false;//
+				}
+				
+			}
+			
+		}
+	return true;//
+	}
+	else if(this->sign == false && rhs.sign == false)
+	{
+		if(this->size > rhs.size){return false;}//
+		else if(this->size<rhs.size){return true;}//
+		else{
+			int i = 0;
+			for( i = 0; i<rhs.size; i++)
+			{
+				if(this->data[i] > rhs.data[i])
+				{
+						return false;//
+				}
+				
+			
+			}
+		}
+	return true;//
+	}
 	else
 	{
-		int i = 0;
-		while(i<this->size)
+		if(this->sign ==false)
 		{
-			if(this->data[i] >other.data[i]) return true;
-			else if(this->data[i] <other.data[i]) return false;
-			i++;
+			return false;//
 		}
-		return false;
+		return true;//
 	}
 }
 
@@ -505,7 +575,7 @@ ostream & operator<<(ostream& os, BigInt& num) {
 	
 	while(result.data[i] == 0)
 	{
-		cout<<result.data[i]<<"----------------------------------------------------"<<endl;
+		//cout<<result.data[i]<<"----------------------------------------------------"<<endl;
 		c++;
 		i++;
 	}
